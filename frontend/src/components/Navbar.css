@@ -1,0 +1,153 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 800;
+  height: 66px;
+  padding: 0 var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(7, 7, 12, 0.72);
+  backdrop-filter: blur(18px);
+  border-bottom-color: var(--border);
+}
+
+.nav-logo {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+.nav-logo span {
+  color: var(--gold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 34px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  position: relative;
+  transition: color 0.2s;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 1.5px;
+  background: var(--gold);
+  transition: width 0.28s ease;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text);
+}
+.nav-links a.active::after,
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-cta {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover {
+  background: var(--gold);
+  color: #000;
+}
+
+/* burger (mobile) */
+.nav-burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.nav-burger span,
+.nav-burger span::before,
+.nav-burger span::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  transition: transform 0.25s, opacity 0.25s;
+}
+.nav-burger span {
+  top: 19px;
+}
+.nav-burger span::before {
+  top: -7px;
+}
+.nav-burger span::after {
+  top: 7px;
+}
+.nav-burger span.open {
+  background: transparent;
+}
+.nav-burger span.open::before {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-burger span.open::after {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-mobile {
+  position: absolute;
+  top: 66px;
+  left: 0;
+  right: 0;
+  background: rgba(7, 7, 12, 0.96);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  list-style: none;
+  padding: 12px 0;
+}
+.nav-mobile li a {
+  display: block;
+  padding: 14px var(--pad);
+  font-size: 15px;
+  color: var(--muted);
+}
+.nav-mobile li a:hover {
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+/* magnetic wrapper around the CTA */
+.nav-cta-wrap {
+  display: inline-flex;
+}
+
+@media (max-width: 860px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-cta-wrap {
+    display: none !important;
+  }
+  .nav-burger {
+    display: block;
+  }
+}

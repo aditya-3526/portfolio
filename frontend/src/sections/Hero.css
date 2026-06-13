@@ -1,0 +1,184 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* vignette so the particle field fades into the page edges */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse 70% 60% at 50% 46%,
+      transparent 0%,
+      rgba(7, 7, 12, 0.35) 62%,
+      var(--void) 100%
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* faint engineering grid for depth */
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 0%, transparent 75%);
+  opacity: 0.5;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 0 var(--pad);
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* top/bottom zones split the viewport at center; the particle name occupies
+   the middle band, so each zone is padded away from center to clear it. */
+.hero-top {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: clamp(26px, 23vh, 250px);
+}
+.hero-bottom {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: clamp(26px, 22vh, 250px);
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 8px 18px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 99px;
+  background: rgba(252, 188, 29, 0.06);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.hero-tag svg {
+  animation: tagPulse 2.6s ease-in-out infinite;
+}
+@keyframes tagPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+
+.hero-role {
+  font-size: clamp(17px, 2.1vw, 23px);
+  color: var(--text);
+  font-weight: 300;
+  margin-top: 4px;
+  max-width: 560px;
+  line-height: 1.55;
+}
+.hero-role span {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 38px;
+  flex-wrap: wrap;
+}
+.hero-cta .btn-gold svg,
+.hero-cta .btn-ghost svg {
+  transition: transform 0.25s ease;
+}
+.hero-cta .btn:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.hero-meta {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--faint);
+  flex-wrap: wrap;
+}
+.hero-meta .dot {
+  color: var(--gold);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+  transition: color 0.25s ease;
+}
+.hero-scroll:hover {
+  color: var(--gold);
+}
+.hero-scroll-line {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-hi);
+  border-radius: 99px;
+}
+.hero-scroll-line svg {
+  animation: bob 1.8s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(-2px); opacity: 0.6; }
+  50% { transform: translateY(3px); opacity: 1; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

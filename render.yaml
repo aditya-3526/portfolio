@@ -1,0 +1,57 @@
+# Render Blueprint — deploys the whole portfolio in one click.
+# Render dashboard → New → Blueprint → connect this repo → Apply.
+#
+# Two services:
+#   1. portfolio-api  — Fastify backend (Node web service)
+#   2. portfolio-web  — React build (static site)
+#
+# The site renders instantly from bundled fallback content, so the static
+# site works on its own. To serve live content from MongoDB Atlas, set
+# MONGO_URI on portfolio-api in the dashboard (it is intentionally not
+# committed). Without it, the API boots and the frontend uses fallback data.
+
+services:
+  # ── Backend: Fastify API ──────────────────────────────────────────────
+  - type: web
+    name: portfolio-api
+    runtime: node
+    rootDir: backend
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Public read-only content API — allow any origin.
+      - key: CLIENT_ORIGIN
+        value: "*"
+      - key: MONGO_DB_NAME
+        value: portfolio
+      # Set this in the Render dashboard to enable live MongoDB data.
+      - key: MONGO_URI
+        sync: false
+
+  # ── Frontend: React static site ───────────────────────────────────────
+  - type: web
+    name: portfolio-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+    envVars:
+      # Bare hostname of the API; api.js prepends https:// automatically.
+      - key: REACT_APP_API_BASE
+        fromService:
+          type: web
+          name: portfolio-api
+          property: host
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN

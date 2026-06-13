@@ -1,0 +1,232 @@
+/* ─────────────────────────────────────────────
+   Design tokens + global base
+   ───────────────────────────────────────────── */
+:root {
+  --void: #07070c;
+  --deep: #0b0b16;
+  --surface: #11111f;
+  --panel: #16162a;
+  --panel-hi: #1d1d36;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hi: rgba(255, 255, 255, 0.14);
+
+  --gold: #fcbc1d;          /* signature accent, matches reference */
+  --gold-soft: #ffd25e;
+  --gold-dim: rgba(252, 188, 29, 0.14);
+  --gold-glow: rgba(252, 188, 29, 0.4);
+
+  --violet: #7c6cf0;
+  --violet-dim: rgba(124, 108, 240, 0.16);
+  --cyan: #38d6e0;
+
+  --text: #ecebf3;
+  --muted: #9a9ab8;
+  --faint: #56566f;
+
+  --font-display: "Syne", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  --maxw: 1180px;
+  --pad: clamp(20px, 5vw, 48px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Lenis smooth scroll drives the easing — disable native smooth behaviour. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+/* fallback for no-JS / reduced-motion where Lenis never mounts */
+html:not(.lenis) {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+::selection {
+  background: var(--gold);
+  color: #000;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--panel-hi);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dim);
+}
+
+/* ── Reusable layout ── */
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+.section {
+  padding: clamp(72px, 12vw, 130px) 0;
+  position: relative;
+  scroll-margin-top: 80px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.eyebrow::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+}
+.eyebrow.center::before {
+  display: none;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5.2vw, 60px);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+
+.section-sub {
+  font-size: clamp(15px, 1.6vw, 17px);
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 560px;
+  margin-top: 18px;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 26px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, background 0.2s ease;
+}
+.btn-gold {
+  background: var(--gold);
+  color: #000;
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 34px var(--gold-glow);
+}
+.btn-ghost {
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* ── Accessibility ── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Film grain overlay — subtle premium texture over everything ── */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(8) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-4%, -4%); }
+  30% { transform: translate(3%, -2%); }
+  50% { transform: translate(-2%, 4%); }
+  70% { transform: translate(4%, 2%); }
+  90% { transform: translate(-3%, 3%); }
+}
+
+/* ── Scroll progress bar (driven by Navbar) ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--gold), var(--violet), var(--cyan));
+  z-index: 9997;
+}

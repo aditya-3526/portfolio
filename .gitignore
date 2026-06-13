@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# env — NEVER commit secrets
+.env
+backend/.env
+frontend/.env
+frontend/.env.local
+
+# build output
+frontend/build/
+dist/
+
+# resume (optional: keep private)
+backend/data/resume.pdf
+
+# logs
+*.log
+npm-debug.log*
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
