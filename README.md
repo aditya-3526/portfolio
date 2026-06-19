@@ -1,5 +1,7 @@
 # Aditya Aryan — Portfolio
 
+### 🔗 Live: **[aditya-aryan.vercel.app](https://aditya-aryan.vercel.app)**
+
 A MERN-stack personal portfolio with a Three.js animated hero, Framer Motion transitions, and content served live from MongoDB.
 
 ## Sections
